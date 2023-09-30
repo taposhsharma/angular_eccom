@@ -1,0 +1,29 @@
+<nav class="navbar  navbar-expand-lg navbar-dark bg-dark ">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <a class="navbar-brand" href="#">E-comm</a>
+            </div>
+            <div class="col left">
+          
+              <div *ngIf="!isLogin">
+
+                
+                <button  (click)="login()" class="btn btn-outline-secondary">login</button>
+            </div>
+            <div *ngIf="isLogin">
+                <button [routerLink]="'/cart'"  class="btn btn-outline-secondary">Cart</button>
+                &nbsp;
+                <button (click)="logout()"  class="btn btn-outline-secondary">logout</button>
+            </div>
+            </div>
+        </div>
+       
+        
+
+        
+
+    </div>
+    
+   
+  </nav>

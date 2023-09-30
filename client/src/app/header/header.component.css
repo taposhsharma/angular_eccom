@@ -1,0 +1,9 @@
+.row{
+    width: 100%;
+}
+
+.left{
+    display: flex;
+    justify-content: right;
+     
+}
