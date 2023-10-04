@@ -1,4 +1,3 @@
-
 import { AuthService } from './auth.service';
 
 import { Injectable } from '@angular/core';
@@ -12,19 +11,14 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthorizationInterceptor implements HttpInterceptor {
-
-
-  constructor( private authService : AuthService){
-   
-
-  }
+  constructor(private authService: AuthService) {}
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     // Add your interceptor logic here
     // For example, add an Authorization header
-    const token = this.authService.getAuthToken()
+    const token = this.authService.getAuthToken();
     // console.log(token)
     if (token) {
       request = request.clone({

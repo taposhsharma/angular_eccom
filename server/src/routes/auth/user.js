@@ -3,8 +3,8 @@ require("dotenv").config();
 
 function authenticate(req, res, next) {
   const headers = req.headers.authorization;
-  const token = headers.split(' ')[1]
-  
+  const token = headers.split(" ")[1];
+
   // console.log(req.headers)
   if (!token) {
     return res.status(401).send("Unauthorized");

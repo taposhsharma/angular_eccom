@@ -4,24 +4,17 @@ import { ProductService } from '../product.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  products: any;
 
-  products:any
+  constructor(private productService: ProductService) {}
 
-  constructor(private productService: ProductService){
-
-  }
-
-  ngOnInit(){
-    this.productService.getStoredProducts().subscribe(
-      (data) => {
-        this.products = data; 
-        console.log(this.products);
-      }
-    );
-    
-    
+  ngOnInit() {
+    this.productService.getStoredProducts().subscribe((data) => {
+      this.products = data;
+      console.log(this.products);
+    });
   }
 }

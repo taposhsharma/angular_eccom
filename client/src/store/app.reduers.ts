@@ -12,10 +12,12 @@ export const initialState: MyState = {
 const myReducer = createReducer(
   initialState,
   on(MyActions.login, (state) => ({ ...state, islogin: true })),
-  on(MyActions.logout, (state) => ({ ...state, islogin: false })),
- 
+  on(MyActions.logout, (state) => ({ ...state, islogin: false }))
 );
 
-export function reducer(state: MyState | undefined, action: MyActions.MyActionsUnion): MyState {
+export function reducer(
+  state: MyState | undefined,
+  action: MyActions.MyActionsUnion
+): MyState {
   return myReducer(state, action);
 }

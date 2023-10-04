@@ -13,15 +13,20 @@ import { Store } from '@ngrx/store';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
 })
-export class SignupComponent implements OnInit{
+export class SignupComponent implements OnInit {
   signupForm: FormGroup;
-  responseData :any
- 
-  
+  responseData: any;
+
   isLogin: boolean | undefined;
   isAuthenticated: boolean = false;
 
-  constructor(private fb: FormBuilder,private http: HttpClient,private store: Store,private authService: AuthService,private router:Router) {
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private store: Store,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.signupForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -32,48 +37,44 @@ export class SignupComponent implements OnInit{
 
   ngOnInit() {
     this.isAuthenticated = this.authService.isAuthenticated();
-    const token = this.authService.getAuthToken()
-    if(token){
-     
+    const token = this.authService.getAuthToken();
+    if (token) {
       this.router.navigate(['/']);
     }
   }
 
   onSubmit() {
-    console.log('hello')
+    console.log('hello');
     if (this.signupForm.valid) {
-      
       console.log(this.signupForm.value.firstName);
 
       const postData = {
-         ...this.signupForm.value
+        ...this.signupForm.value,
       };
-  
-      const url = 'http://localhost:3000/users/signup'; 
-  
-      this.http.post(url, postData)
-      .pipe(
-        catchError((error) => {
-        
-          console.error('Error sending POST request', error);
-          throw error;
-        })
-      )
-      .subscribe((response) => {
-        console.log('POST request successful', response);
 
-        this.responseData =response
-        if(this.responseData){
-        const user = this.responseData.user
-        const authToken = this.responseData.token  
-        this.authService.setAuthData(user,authToken);
-        this.isAuthenticated = true;
-        this.store.dispatch(MyActions.login());
-        this.router.navigate(['/']);
-      
-        }
-       
-      });
+      const url = 'http://localhost:3000/users/signup';
+
+      this.http
+        .post(url, postData)
+        .pipe(
+          catchError((error) => {
+            console.error('Error sending POST request', error);
+            throw error;
+          })
+        )
+        .subscribe((response) => {
+          console.log('POST request successful', response);
+
+          this.responseData = response;
+          if (this.responseData) {
+            const user = this.responseData.user;
+            const authToken = this.responseData.token;
+            this.authService.setAuthData(user, authToken);
+            this.isAuthenticated = true;
+            this.store.dispatch(MyActions.login());
+            this.router.navigate(['/']);
+          }
+        });
     }
   }
 }

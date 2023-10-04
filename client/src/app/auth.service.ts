@@ -12,10 +12,14 @@ export class AuthService {
   // Store authentication data (user and token) in cookies
   setAuthData(user: any, token: string, expirationHours: number = 2): void {
     // Store user data in a cookie
-    document.cookie = `${this.USER_COOKIE_NAME}=${JSON.stringify(user)}; expires=${this.getExpirationDate(expirationHours)}; path=/`;
+    document.cookie = `${this.USER_COOKIE_NAME}=${JSON.stringify(
+      user
+    )}; expires=${this.getExpirationDate(expirationHours)}; path=/`;
 
     // Store the authentication token in another cookie
-    document.cookie = `${this.TOKEN_COOKIE_NAME}=${token}; expires=${this.getExpirationDate(expirationHours)}; path=/`;
+    document.cookie = `${
+      this.TOKEN_COOKIE_NAME
+    }=${token}; expires=${this.getExpirationDate(expirationHours)}; path=/`;
   }
 
   // Get user data from the cookie
@@ -46,7 +50,9 @@ export class AuthService {
   // Helper function to get the expiration date
   private getExpirationDate(expirationHours: number): string {
     const expirationDate = new Date();
-    expirationDate.setTime(expirationDate.getTime() + expirationHours * 60 * 60 * 1000);
+    expirationDate.setTime(
+      expirationDate.getTime() + expirationHours * 60 * 60 * 1000
+    );
     return expirationDate.toUTCString();
   }
 

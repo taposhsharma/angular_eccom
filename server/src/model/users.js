@@ -6,53 +6,52 @@ const bcrypt = require("bcryptjs");
 
 const { urlencoded } = require("express");
 
-const userSchema = new mongoose.Schema({
-  firstname:{
-    type:String,
-    trim:true
-  },
-  lastname:{
-    type:String,
-    trim:true
-  },
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-    trim: true,
-    lowercase: true,
-    validate(value) {
-      if (!validator.isEmail(value)) {
-        throw new Error("Email is invalid!");
-      }
+const userSchema = new mongoose.Schema(
+  {
+    firstname: {
+      type: String,
+      trim: true,
     },
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 6,
-    trim: true,
-    // validate(value){
-    //     if(value){
-
-    //     }
-    // }
-  },
-  tokens: [
-    {
-      token: {
-        type: String,
-        required: true,
+    lastname: {
+      type: String,
+      trim: true,
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+      trim: true,
+      lowercase: true,
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error("Email is invalid!");
+        }
       },
     },
-  ],
+    password: {
+      type: String,
+      required: true,
+      minlength: 6,
+      trim: true,
+      // validate(value){
+      //     if(value){
 
- 
-},
-{
-  timestamps:true
-});
-
+      //     }
+      // }
+    },
+    tokens: [
+      {
+        token: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
 userSchema.methods.getPublicProfile = function () {
   const user = this;
@@ -63,7 +62,6 @@ userSchema.methods.getPublicProfile = function () {
   return userObject;
 };
 userSchema.statics.findByCredentials = async (email, password) => {
-
   const user = await User.findOne({ email });
   // console.log(email)
   if (!user) {
@@ -94,10 +92,6 @@ userSchema.pre("save", async function (next) {
 
   next();
 });
-
-
-
-
 
 const User = mongoose.model("User", userSchema);
 
